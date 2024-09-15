@@ -33,6 +33,10 @@ public class TransactionRecord {
     @JoinColumn
     private Account fromAccount;
 
+    @ManyToOne
+    @JoinColumn
+    private TransactionCategory transactionCategory;
+
     @Version
     private int version;
 
@@ -42,5 +46,14 @@ public class TransactionRecord {
         this.toAccount = toAccount;
         this.fromAccount = fromAccount;
         this.memo = memo;
+    }
+
+    public TransactionRecord(Double amount, Account toAccount, Account fromAccount, String memo, TransactionCategory transactionCategory) {
+        this.amount = amount;
+        this.time = LocalDateTime.now();
+        this.toAccount = toAccount;
+        this.fromAccount = fromAccount;
+        this.memo = memo;
+        this.transactionCategory = transactionCategory;
     }
 }
