@@ -15,15 +15,9 @@ import lombok.Setter;
 public class TransactionCategoryDTO {
     private long id;
     private String categoryName;
-    private AccountDTO account;
 
     public TransactionCategoryDTO(TransactionCategory entity) {
         this.id = entity.getId();
         this.categoryName = entity.getCategoryName();
-        Account account = entity.getAccount();
-
-        if (account != null) {
-            this.account = new AccountDTO(account);
-        }
     }
 }

@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
+import lombok.Setter;
 
 /**
  * Entity object for customer database table.
@@ -20,6 +17,7 @@ public class TransactionCategory {
     @GeneratedValue
     private long id;
 
+    @Setter
     @Column(nullable = false)
     private String categoryName;
 

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/customer/{customerId}/account/{accountId}/transaction_record")
 public class TransactionCategoryController {
@@ -18,12 +20,29 @@ public class TransactionCategoryController {
         this.transactionCategoryService = transactionCategoryService;
     }
 
+    // Get all transaction categories for an account
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllTransactionCategories(@PathVariable Long accountId) {
+        List<TransactionCategoryDTO> resultList = transactionCategoryService
+                .getAllTransactionCategories(accountId);
+        return ResponseEntity.ok(resultList);
+    }
+
     // Create a new transaction category for an account
     @PostMapping("/create")
     public ResponseEntity<?> createTransactionCategory(@PathVariable Long accountId,
                                                       @RequestBody TransactionCategoryController.CreateRequest request) {
         TransactionCategoryDTO transactionCategory = transactionCategoryService
                 .createTransactionCategory(request.categoryName, accountId);
+        return ResponseEntity.ok(transactionCategory);
+    }
+
+    // Edit the name of a transaction category
+    @PostMapping("/edit")
+    public ResponseEntity<?> editTransactionCategory(@PathVariable Long accountId,
+                                                      @RequestBody TransactionCategoryController.EditRequest request) {
+        TransactionCategoryDTO transactionCategory = transactionCategoryService
+                .editTransactionCategory(request.categoryId, request.newCategoryName, accountId);
         return ResponseEntity.ok(transactionCategory);
     }
 
@@ -48,6 +67,11 @@ public class TransactionCategoryController {
 
     public static class CreateRequest {
         public String categoryName;
+    }
+
+    public static class EditRequest {
+        public String newCategoryName;
+        public Long categoryId;
     }
 
     public static class AssignRequest {

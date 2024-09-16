@@ -16,6 +16,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Business logic for creating and managing transaction categories.
  */
@@ -65,5 +67,22 @@ public class TransactionCategoryService {
         // Delete the category from the account
         transactionCategoryRepository.delete(transactionCategory);
         System.out.println("Deleted category: " + transactionCategory.getCategoryName());
+    }
+
+    @Transactional
+    public TransactionCategoryDTO editTransactionCategory(Long categoryId, String categoryName, Long accountId) {
+        Account account = accountRepository.getReferenceById(accountId);
+        TransactionCategory transactionCategory = transactionCategoryRepository.findByIdAndAccount(categoryId, account).orElseThrow();
+        transactionCategory.setCategoryName(categoryName);
+        transactionCategory = transactionCategoryRepository.save(transactionCategory);
+        return new TransactionCategoryDTO(transactionCategory);
+    }
+
+    @Transactional
+    public List<TransactionCategoryDTO> getAllTransactionCategories(Long accountId) {
+        Account account = accountRepository.getReferenceById(accountId);
+        return transactionCategoryRepository.findAllByAccount(account).stream()
+                .map(TransactionCategoryDTO::new)
+                .toList();
     }
 }
