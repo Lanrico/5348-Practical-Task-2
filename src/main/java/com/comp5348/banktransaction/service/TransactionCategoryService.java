@@ -1,8 +1,11 @@
 package com.comp5348.banktransaction.service;
 
+import com.comp5348.banktransaction.dto.AccountDTO;
 import com.comp5348.banktransaction.dto.TransactionCategoryDTO;
+import com.comp5348.banktransaction.dto.TransactionRecordDTO;
 import com.comp5348.banktransaction.model.Account;
 import com.comp5348.banktransaction.model.TransactionCategory;
+import com.comp5348.banktransaction.model.TransactionRecord;
 import com.comp5348.banktransaction.repository.AccountRepository;
 import com.comp5348.banktransaction.repository.CustomerRepository;
 import com.comp5348.banktransaction.repository.TransactionCategoryRepository;
@@ -42,4 +45,25 @@ public class TransactionCategoryService {
         return new TransactionCategoryDTO(transactionCategory);
     }
 
+    @Transactional
+    public TransactionRecordDTO assignTransactionCategory(Long transactionRecordId, Long transactionCategoryId) {
+        TransactionRecord transactionRecord = transactionRecordRepository.getReferenceById(transactionRecordId);
+        TransactionCategory transactionCategory = transactionCategoryRepository.getReferenceById(transactionCategoryId);
+        transactionRecord.setTransactionCategory(transactionCategory);
+        transactionRecord = transactionRecordRepository.save(transactionRecord);
+        return new TransactionRecordDTO(transactionRecord);
+    }
+
+    @Transactional
+    public void deleteTransactionCategory(Long categoryId, Long accountId) {
+        Account account = accountRepository.getReferenceById(accountId);
+        TransactionCategory transactionCategory = transactionCategoryRepository.findByIdAndAccount(categoryId, account).orElseThrow();
+        // Remove all references to this category
+        entityManager.createQuery("UPDATE TransactionRecord SET transactionCategory = NULL WHERE transactionCategory = :category")
+                .setParameter("category", transactionCategory)
+                .executeUpdate();
+        // Delete the category from the account
+        transactionCategoryRepository.delete(transactionCategory);
+        System.out.println("Deleted category: " + transactionCategory.getCategoryName());
+    }
 }

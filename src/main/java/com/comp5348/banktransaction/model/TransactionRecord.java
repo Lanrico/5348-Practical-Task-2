@@ -3,6 +3,7 @@ package com.comp5348.banktransaction.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -33,6 +34,7 @@ public class TransactionRecord {
     @JoinColumn
     private Account fromAccount;
 
+    @Setter
     @ManyToOne
     @JoinColumn
     private TransactionCategory transactionCategory;
@@ -56,4 +58,5 @@ public class TransactionRecord {
         this.memo = memo;
         this.transactionCategory = transactionCategory;
     }
+
 }
