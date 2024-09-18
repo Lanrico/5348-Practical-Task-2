@@ -16,8 +16,8 @@ public class TransactionCategoryDTO {
     private long id;
     private String categoryName;
 
-    public TransactionCategoryDTO(TransactionCategory entity) {
-        this.id = entity.getId();
-        this.categoryName = entity.getCategoryName();
+    public TransactionCategoryDTO(TransactionCategory transactionCategory) {
+        this.id = transactionCategory.getId();
+        this.categoryName = transactionCategory.getCategoryName();
     }
 }
