@@ -26,7 +26,6 @@ public class TransactionCategoryService {
     private final TransactionCategoryRepository transactionCategoryRepository;
     private final AccountRepository accountRepository;
     private final TransactionRecordRepository transactionRecordRepository;
-    private final CustomerRepository customerRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -36,9 +35,9 @@ public class TransactionCategoryService {
         this.transactionCategoryRepository = transactionCategoryRepository;
         this.accountRepository = accountRepository;
         this.transactionRecordRepository = transactionRecordRepository;
-        this.customerRepository = customerRepository;
     }
 
+    // Create a new transaction category
     @Transactional
     public TransactionCategoryDTO createTransactionCategory(String categoryName, Long accountId) {
         Account account = accountRepository.getReferenceById(accountId);
@@ -47,6 +46,7 @@ public class TransactionCategoryService {
         return new TransactionCategoryDTO(transactionCategory);
     }
 
+    // Assign a transaction category to a transaction record
     @Transactional
     public TransactionRecordDTO assignTransactionCategory(Long transactionRecordId, Long transactionCategoryId) {
         TransactionRecord transactionRecord = transactionRecordRepository.getReferenceById(transactionRecordId);
@@ -56,6 +56,7 @@ public class TransactionCategoryService {
         return new TransactionRecordDTO(transactionRecord);
     }
 
+    // Delete a transaction category
     @Transactional
     public void deleteTransactionCategory(Long categoryId, Long accountId) {
         Account account = accountRepository.getReferenceById(accountId);
@@ -69,6 +70,7 @@ public class TransactionCategoryService {
         System.out.println("Deleted category: " + transactionCategory.getCategoryName());
     }
 
+    // Edit a transaction category
     @Transactional
     public TransactionCategoryDTO editTransactionCategory(Long categoryId, String categoryName, Long accountId) {
         Account account = accountRepository.getReferenceById(accountId);
@@ -78,6 +80,7 @@ public class TransactionCategoryService {
         return new TransactionCategoryDTO(transactionCategory);
     }
 
+    // Get all transaction categories for an account
     @Transactional
     public List<TransactionCategoryDTO> getAllTransactionCategories(Long accountId) {
         Account account = accountRepository.getReferenceById(accountId);

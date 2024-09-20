@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/customer/{customerId}/account/{accountId}/transaction_record")
+@RequestMapping("/api/customer/{customerId}/account/{accountId}/transaction_category")
 public class TransactionCategoryController {
     private final TransactionCategoryService transactionCategoryService;
 

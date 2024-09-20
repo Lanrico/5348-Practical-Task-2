@@ -1,6 +1,7 @@
 package com.comp5348.banktransaction.dto;
 
 import com.comp5348.banktransaction.model.Account;
+import com.comp5348.banktransaction.model.TransactionCategory;
 import com.comp5348.banktransaction.model.TransactionRecord;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class TransactionRecordDTO {
     private Double amount;
     private String memo;
     private LocalDateTime time;
+    private long transactionCategoryId;
     private AccountDTO toAccount;
     private AccountDTO fromAccount;
 
@@ -27,6 +29,7 @@ public class TransactionRecordDTO {
         this.memo = entity.getMemo();
         this.amount = entity.getAmount();
         this.time = entity.getTime();
+        this.transactionCategoryId = entity.getTransactionCategory().getId();
         Account toAccount = entity.getToAccount();
         if (toAccount != null) {
             this.toAccount = new AccountDTO(toAccount);

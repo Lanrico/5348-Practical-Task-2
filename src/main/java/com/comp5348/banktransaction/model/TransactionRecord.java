@@ -34,6 +34,7 @@ public class TransactionRecord {
     @JoinColumn
     private Account fromAccount;
 
+    // Add a new field to store the transaction category
     @Setter
     @ManyToOne
     @JoinColumn
@@ -42,6 +43,7 @@ public class TransactionRecord {
     @Version
     private int version;
 
+    // Edit constructor to initialize the transaction category
     public TransactionRecord(Double amount, Account toAccount, Account fromAccount, String memo) {
         this.amount = amount;
         this.time = LocalDateTime.now();
@@ -49,14 +51,4 @@ public class TransactionRecord {
         this.fromAccount = fromAccount;
         this.memo = memo;
     }
-
-    public TransactionRecord(Double amount, Account toAccount, Account fromAccount, String memo, TransactionCategory transactionCategory) {
-        this.amount = amount;
-        this.time = LocalDateTime.now();
-        this.toAccount = toAccount;
-        this.fromAccount = fromAccount;
-        this.memo = memo;
-        this.transactionCategory = transactionCategory;
-    }
-
 }

@@ -21,6 +21,7 @@ public class SavingsGoalService {
         this.savingsGoalRepository = savingsGoalRepository;
     }
 
+    // Get all savings goals for an account
     public List<SavingsGoalDTO> getAllSavingsGoals(Long accountId) {
         Account account = accountRepository.getReferenceById(accountId);
         return savingsGoalRepository.findAllByAccount(account).stream()
@@ -28,6 +29,7 @@ public class SavingsGoalService {
                 .toList();
     }
 
+    // Create a new savings goal
     public SavingsGoalDTO createSavingsGoal(String goalName, double goalAmount, String targetDate, Long accountId) {
         Account account = accountRepository.getReferenceById(accountId);
         SavingsGoal savingsGoal = new SavingsGoal(goalName, goalAmount, targetDate, account);
@@ -35,6 +37,7 @@ public class SavingsGoalService {
         return new SavingsGoalDTO(savingsGoal);
     }
 
+    // Delete a savings goal
     public void deleteSavingsGoal(Long goalId, Long accountId) {
         Account account = accountRepository.getReferenceById(accountId);
         SavingsGoal savingsGoal = savingsGoalRepository.getReferenceById(goalId);
@@ -43,10 +46,14 @@ public class SavingsGoalService {
         }
     }
 
+    // Update a savings goal's information
     public SavingsGoalDTO updateSavingsGoal(Long goalId, String goalName, double targetAmount, String targetDate, Long accountId) {
         Account account = accountRepository.getReferenceById(accountId);
         SavingsGoal savingsGoal = savingsGoalRepository.getReferenceById(goalId);
         if (savingsGoal.getAccount().equals(account)) {
+            // The distance to target is also updated based on the new target amount
+            // distance will increase or decrease based on the difference between the new target amount and the old target amount
+            // if distance will be negative, it will be set to 0
             double newDistanceToTarget = savingsGoal.getDistanceToTarget() + targetAmount - savingsGoal.getTargetAmount() > 0 ?
                     savingsGoal.getDistanceToTarget() + targetAmount - savingsGoal.getTargetAmount() : 0;
             savingsGoal.setGoalName(goalName);
@@ -58,10 +65,12 @@ public class SavingsGoalService {
         return new SavingsGoalDTO(savingsGoal);
     }
 
+    // Update the distance to target of a savings goal
     public SavingsGoalDTO updateSavingsGoalDistance(Long goalId, double updateAmount, Long accountId) {
         Account account = accountRepository.getReferenceById(accountId);
         SavingsGoal savingsGoal = savingsGoalRepository.getReferenceById(goalId);
         if (savingsGoal.getAccount().equals(account)) {
+            //If distance will be negative, it will be set to 0
             double newDistanceToTarget = savingsGoal.getDistanceToTarget() - updateAmount > 0 ?
                     savingsGoal.getDistanceToTarget() - updateAmount : 0;
             savingsGoal.setDistanceToTarget(newDistanceToTarget);
