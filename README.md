@@ -149,7 +149,7 @@ It is worth mentioning that the distance to target field is added to the savings
 Here are the screenshots that showing the solution do provide the requested functionality.
 ## Transaction Category
 Create a category (request and its response)
-![[Pasted image 20240920144815.png]](./readmeAttachments/Pasted image 20240920144815.png)
+![[Pasted image 20240920144815.png]](./readmeAttachments/Pasted%20image%2020240920144815.png)
 
 Edit a category (request and its response)
 ![[Pasted image 20240920144855.png]](./readmeAttachments/Pasted image 20240920144855.png) 
