@@ -20,6 +20,7 @@ public class TransactionRecordDTO {
     private Double amount;
     private String memo;
     private LocalDateTime time;
+    // The ID of the transaction category
     private long transactionCategoryId;
     private AccountDTO toAccount;
     private AccountDTO fromAccount;
@@ -29,6 +30,7 @@ public class TransactionRecordDTO {
         this.memo = entity.getMemo();
         this.amount = entity.getAmount();
         this.time = entity.getTime();
+        // Get the ID of the transaction category
         this.transactionCategoryId = entity.getTransactionCategory().getId();
         Account toAccount = entity.getToAccount();
         if (toAccount != null) {

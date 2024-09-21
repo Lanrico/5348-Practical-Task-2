@@ -1,3 +1,7 @@
+This readme file's pdf version is also attached in the submission folder.
+Check the pdf file if there is any error in the markdown file .
+
+This solution is uploaded to the following repository: https://github.com/Lanrico/5348-Practical-Task-2
 # Modified Components
 ## Package: model
 + Add new class: SavingsGoal
@@ -63,10 +67,14 @@ Content-Type: application/json
     "categoryName": "BD"
 }
 ```
+It will return the category id and name of the newly created category.
+
 Check all category:
 ```http
 GET http://localhost:8080/api/customer/1/account/1/transaction_category/all
 ```
+It will return all the categories in the account.
+
 Edit a category:
 ```http
 POST http://localhost:8080/api/customer/1/account/1/transaction_category/edit  
@@ -77,6 +85,8 @@ Content-Type: application/json
 	"newCategoryName": "Ticket"  
 }
 ```
+It will return the category id and name of the edited category.
+
 Assign a category to a transaction record
 ```http
 POST http://localhost:8080/api/customer/1/account/1/transaction_category/assign  
@@ -87,6 +97,8 @@ Content-Type: application/json
 	"categoryId": 202
 }
 ```
+It will return the transaction record, which contains the category id.
+
 Delete a category
 ```http
 POST http://localhost:8080/api/customer/1/account/1/transaction_category/delete  
@@ -96,6 +108,8 @@ Content-Type: application/json
     "categoryId": 202
 }
 ```
+It will return response status 200 if the deletion is successful.
+
 ## Savings Goal
 Create a savings goal
 ```http
@@ -108,20 +122,28 @@ Content-Type: application/json
     "targetDate": "2024-12-20"
 }
 ```
+It will return the savings goal id, name, amount, target date, and distance to target.
+
 Check all savings goal:
 ```http
 GET http://localhost:8080/api/customer/1/account/1/savings_goal/all
 ```
+It will return all the savings goals in the account.
+
 Edit a savings goal
 ```http
-POST http://localhost:8080/api/customer/1/account/1/transaction_category/edit  
-Content-Type: application/json  
-  
-{  
-	"categoryId": 202,  
-	"newCategoryName": "Ticket"  
+POST http://localhost:8080/api/customer/1/account/1/savings_goal/update
+Content-Type: application/json
+
+{
+  "goalId": 52,
+  "goalName": "Hatsune Miku: 10th Anniversary Ver. 1/7",
+  "targetAmount": 659,
+  "targetDate": "2024-12-20"
 }
 ```
+It will return the updated savings goal id, name, amount, target date, and distance to target.
+
 Update the distance to target when customer get money to help finish the target (request and its response)
 ```http
 POST http://localhost:8080/api/customer/1/account/1/savings_goal/update_distance  
@@ -132,6 +154,8 @@ Content-Type: application/json
 	"updateAmount": 100
 }
 ```
+It will return the updated savings goal id, name, amount, target date, and distance to target.
+
 Delete a savings goal
 ```http
 POST http://localhost:8080/api/customer/1/account/1/savings_goal/delete  
@@ -141,6 +165,8 @@ Content-Type: application/json
 	"goalId": 52
 }
 ```
+It will return response status 200 if the deletion is successful.
+
 # Discussion of Changes
 In order to realise the two proposed requirements, the model, repository, service, controller, and dto classes corresponding to the two entities were first created, and then business logic was added to implement basic CRUD operations, so that most of the requirements have been completed. 
 
